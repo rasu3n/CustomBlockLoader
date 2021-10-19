@@ -245,9 +245,12 @@ class CustomBlockLoader extends PluginBase {
 
 		/** @var R12ToCurrentBlockMapEntry[] $legacyStateMap */
 		$legacyStateMap = [];
-		$contents = file_get_contents(Path::join(RESOURCE_PATH, "vanilla", "r12_to_current_block_map.bin"));
-		assert($contents !== false);
-		$legacyStateMapReader = PacketSerializer::decoder($contents, 0, new PacketSerializerContext(GlobalItemTypeDictionary::getInstance()->getDictionary()));
+		$path = Path::join(RESOURCE_PATH, "vanilla", "r12_to_current_block_map.bin");
+		$R12ToCurrentBlockMapFile = file_get_contents($path);
+		if ($R12ToCurrentBlockMapFile === false) {
+			throw new AssumptionFailedError("Missing required resource file($path)");
+		}
+		$legacyStateMapReader = PacketSerializer::decoder($R12ToCurrentBlockMapFile, 0, new PacketSerializerContext(GlobalItemTypeDictionary::getInstance()->getDictionary()));
 		$nbtReader = new NetworkNbtSerializer();
 		while (!$legacyStateMapReader->feof()) {
 			$id = $legacyStateMapReader->getString();
