@@ -1,7 +1,7 @@
 ---
 name: CustomBlockLoader
 version: 0.0.1
-main: Rush2929\CustomBlockLoader\Main
+main: Rush2929\CustomBlockLoader\CustomBlockLoader
 api: 4.0.0-BETA5
 src-namespace-prefix: Rush2929\CustomBlockLoader
 ...

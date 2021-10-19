@@ -5,6 +5,9 @@
 		"phpstan/phpstan": "0.12.99",
 		"phpstan/phpstan-strict-rules": "0.12.11"
 	},
+	"require": {
+		"ext-igbinary": "*"
+	},
 	"autoload-dev": {
 		"psr-4": {
 			"Rush2929\\CustomBlockLoader\\": "src"
