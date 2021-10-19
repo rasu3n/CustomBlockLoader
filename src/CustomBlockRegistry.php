@@ -9,7 +9,6 @@ use function array_flip;
 use function array_map;
 use function explode;
 use function preg_match;
-use function var_dump;
 
 final class CustomBlockRegistry {
 	public const THE_IDENTIFIER_IS_INVALID = "The identifier is invalid.";
