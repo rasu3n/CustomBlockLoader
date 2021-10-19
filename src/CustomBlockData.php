@@ -5,23 +5,31 @@ declare(strict_types=1);
 namespace Rush2929\CustomBlockLoader;
 
 use InvalidArgumentException;
+use InvalidStateException;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\network\mcpe\protocol\types\BlockPaletteEntry;
-use function preg_match;
+use function explode;
 
 final class CustomBlockData {
+
+	private string $name; //TODO: FIXME
 
 	public function __construct(
 		private string $identifier,
 		private int $legacyId,
 		private CompoundTag $states
 	) {
-		if (preg_match("/^[a-zA-Z0-9._]+:[a-zA-Z0-9._]+$/", $this->identifier) !== 1) {
-			throw new InvalidArgumentException("The identifier is invalid. The identifier must be of the form \"namespace:name\". (Only the characters \"a-zA-Z0-9._\" are allowed.)");
+		try {
+			CustomBlockLoader::getBlockRegistry()->validateBlockIdentifier($this->identifier);
+		} catch (InvalidStateException $e) {
+			throw new InvalidArgumentException($e->getMessage());
 		}
+		[, $this->name] = explode(":", $this->identifier);
 	}
 
 	public function getIdentifier() : string { return $this->identifier; }
+
+	public function getName() : string { return $this->name; }
 
 	public function getLegacyId() : int { return $this->legacyId; }
 

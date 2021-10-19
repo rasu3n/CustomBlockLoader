@@ -52,7 +52,16 @@ class CustomBlockLoader extends PluginBase {
 	private static ?array $defaultLegacyStateMap = null;
 
 	public static function getBlockRegistry() : CustomBlockRegistry {
-		return self::$registry ??= new CustomBlockRegistry();
+		if (self::$registry !== null) {
+			return self::$registry;
+		}
+
+		/** @var list<string> $invalidBlockNames */
+		$invalidBlockNames = [];
+		foreach (self::loadAndGetDefaultBedrockKnownStates() as $state) {
+			$invalidBlockNames[] = $state->getString("name");
+		}
+		return self::$registry = new CustomBlockRegistry($invalidBlockNames);
 	}
 
 	public function onLoad() : void {
