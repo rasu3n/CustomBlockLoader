@@ -51,7 +51,7 @@ class CustomBlockLoader extends PluginBase {
 	private static ?array $defaultLegacyStateMap = null;
 
 	public static function getBlockRegistry() : CustomBlockRegistry {
-		return self::$registry ??= new CustomBlockRegistry(array_map(fn(CompoundTag $state) => $state->getString("name"), self::loadAndGetDefaultBedrockKnownStates())); //TODO: FIXME
+		return self::$registry ??= new CustomBlockRegistry(array_map(fn(CompoundTag $state) => $state->getString("name"), self::getDefaultBedrockKnownStates())); //TODO: FIXME
 	}
 
 	public function onLoad() : void {
@@ -151,8 +151,8 @@ class CustomBlockLoader extends PluginBase {
 		$mapping__registerMapping = new ReflectionMethod(RuntimeBlockMapping::class, "registerMapping");
 		$mapping__registerMapping->setAccessible(true);
 
-		$bedrockKnownStates = self::loadAndGetDefaultBedrockKnownStates();
-		$legacyStateMap = self::loadAndGetDefaultLegacyStateMap();
+		$bedrockKnownStates = self::getDefaultBedrockKnownStates();
+		$legacyStateMap = self::getDefaultLegacyStateMap();
 
 		LegacyBlockIdToStringIdMap::reset();
 		/** @var LegacyBlockIdToStringIdMap $legacyIdMap */
@@ -216,7 +216,7 @@ class CustomBlockLoader extends PluginBase {
 	/**
 	 * @return list<CompoundTag>
 	 */
-	private static function loadAndGetDefaultBedrockKnownStates() : array {
+	private static function getDefaultBedrockKnownStates() : array {
 		if (self::$defaultBedrockKnownStates !== null) {
 			return self::$defaultBedrockKnownStates;
 		}
@@ -237,7 +237,7 @@ class CustomBlockLoader extends PluginBase {
 	/**
 	 * @return list<R12ToCurrentBlockMapEntry>
 	 */
-	private static function loadAndGetDefaultLegacyStateMap() : array {
+	private static function getDefaultLegacyStateMap() : array {
 		if (self::$defaultLegacyStateMap !== null) {
 			return self::$defaultLegacyStateMap;
 		}
