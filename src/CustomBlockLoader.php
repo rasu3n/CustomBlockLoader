@@ -36,7 +36,6 @@ use ReflectionProperty;
 use RuntimeException;
 use Webmozart\PathUtil\Path;
 use function array_map;
-use function assert;
 use function explode;
 use function file_get_contents;
 use function strcasecmp;
