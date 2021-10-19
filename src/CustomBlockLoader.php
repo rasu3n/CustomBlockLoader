@@ -231,9 +231,8 @@ class CustomBlockLoader extends PluginBase {
 		while (!$stream->feof()) {
 			$bedrockKnownStates[] = $stream->getNbtCompoundRoot();
 		}
-		self::$defaultBedrockKnownStates = $bedrockKnownStates;
 
-		return $bedrockKnownStates;
+		return self::$defaultBedrockKnownStates = $bedrockKnownStates;
 	}
 
 	/**
@@ -259,9 +258,8 @@ class CustomBlockLoader extends PluginBase {
 			$legacyStateMapReader->setOffset($offset);
 			$legacyStateMap[] = new R12ToCurrentBlockMapEntry($id, $meta, $state);
 		}
-		self::$defaultLegacyStateMap = $legacyStateMap;
 
-		return $legacyStateMap;
+		return self::$defaultLegacyStateMap = $legacyStateMap;
 	}
 
 	/**
