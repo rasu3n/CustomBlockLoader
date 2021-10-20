@@ -226,6 +226,7 @@ class CustomBlockLoader extends PluginBase {
 			throw new AssumptionFailedError("Missing required resource file($path)");
 		}
 		$stream = PacketSerializer::decoder($canonicalBlockStatesFile, 0, new PacketSerializerContext(GlobalItemTypeDictionary::getInstance()->getDictionary()));
+		/** @var list<CompoundTag> $bedrockKnownStates */
 		$bedrockKnownStates = [];
 		while (!$stream->feof()) {
 			$bedrockKnownStates[] = $stream->getNbtCompoundRoot();
@@ -242,7 +243,7 @@ class CustomBlockLoader extends PluginBase {
 			return self::$defaultLegacyStateMap;
 		}
 
-		/** @var R12ToCurrentBlockMapEntry[] $legacyStateMap */
+		/** @var list<R12ToCurrentBlockMapEntry> $legacyStateMap */
 		$legacyStateMap = [];
 		$path = Path::join(RESOURCE_PATH, "vanilla", "r12_to_current_block_map.bin");
 		$R12ToCurrentBlockMapFile = file_get_contents($path);
