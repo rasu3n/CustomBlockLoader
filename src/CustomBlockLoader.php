@@ -321,6 +321,8 @@ class CustomBlockLoader extends PluginBase {
 			$simpleNetToCoreMapping[$runtimeId] = $runtimeId;
 		}
 
+		$itemTypeDictionary__intToStringIdMap->setValue($dictionary, $intToStringIdMap);
+		$itemTypeDictionary__stringToIntMap->setValue($dictionary, $stringToIntMap);
 		$itemTranslator__simpleCoreToNetMapping->setValue($itemTranslator, $simpleCoreToNetMapping);
 		$itemTranslator__simpleNetToCoreMapping->setValue($itemTranslator, $simpleNetToCoreMapping);
 	}
