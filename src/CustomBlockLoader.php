@@ -74,13 +74,17 @@ class CustomBlockLoader extends PluginBase {
 	}
 
 	protected function onEnable() : void {
-		$this->getServer()->getPluginManager()->registerEvent(DataPacketSendEvent::class, function(DataPacketSendEvent $ev) : void {
+		$EXPERIMENTS = new Experiments(["data_driven_items" => true], true);
+		$this->getServer()->getPluginManager()->registerEvent(DataPacketSendEvent::class, function(DataPacketSendEvent $ev) use ($EXPERIMENTS) : void {
 			foreach ($ev->getPackets() as $packet) {
-				if ($packet instanceof ResourcePackStackPacket || $packet instanceof StartGamePacket) {
-					$packet->experiments = new Experiments(["data_driven_items" => true], true);
-					if ($packet instanceof StartGamePacket) {
+				switch (true) {
+					case $packet instanceof ResourcePackStackPacket:
+						$packet->experiments = clone $EXPERIMENTS;
+						break;
+					case $packet instanceof StartGamePacket:
+						$packet->levelSettings->experiments = clone $EXPERIMENTS;
 						$packet->blockPalette += array_map(fn(CustomBlockData $data) => $data->toBlockPaletteEntry(), self::getBlockRegistry()->getBlocks(), []/** ReAssign key */);
-					}
+						break;
 				}
 			}
 		}, EventPriority::LOW, $this);
